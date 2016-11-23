@@ -1,0 +1,40 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+
+mainClassName = 'ru.ypypy28.downloader.Downloader'
+
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+
+repositories {
+    mavenCentral()
+}
+
+
+
+jar {
+    manifest.attributes('Main-Class': 'ru.ypypy28.downloader.Downloader')
+}
+
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.1' 
+}
+
+
+task runApp (type:JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+
+    main = mainClassName
+
+   args "-f .\\src\\test\\resources\\urls_list.txt -o .\\src\\test\\resources\\downloads -n 3 -l 512k".split()
+
+}
